@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\QuartoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [QuartoController::class, 'index']);
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/dashboard', [QuartoController::class, 'dashboard']);
+Route::get('/cadastrar', [QuartoController::class, 'cadastrar']);
+Route::post('/cadastrar', [QuartoController::class, 'cadastrarStore']);
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dashboard', [QuartoController::class, 'painel'])->name('dashboard');
+
 });

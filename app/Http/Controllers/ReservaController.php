@@ -19,7 +19,18 @@ class ReservaController extends Controller
     public function reservaStore(Request $request)
     {
         $request->validate([
-            'quarto' => 'required|exists:quartos,id',
+            'quarto' => 'required|integer|exists:quartos,id',
+            'data_checkin' => 'required|date|after_or_equal:today',
+            'data_checkout' => 'required|date|after:data_checkin',
+        ],[
+            'quarto.required' => 'quarto é obrigatório',
+            'quarto.integer' => 'quarto precisa ser numero inteiro',
+            'data_checkin.date' => 'data precisa ser uma data valida',
+            'data_checkin.required' => 'data de checkin é obrigatório',
+            'data_checkin.after_or_equal' => 'data de checkin precisa ser hoje ou superior',
+            'data_checkout.required' => 'data de checkout é obrigatório',
+            'data_checkout.datel' => 'data de checkout precisa ser uma data valida',
+            'data_checkout.after' => 'data de checkout precisa ser superior a data de checkin',
         ]);
 
         

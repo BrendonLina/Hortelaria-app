@@ -158,7 +158,8 @@ class QuartoController extends Controller
     public function cadastrarQuartoStore(Request $request)
     {
         $request->validate([
-            'numero' => 'required|integer',
+            // 'numero' => 'required|integer|exists:',
+            'numero' => 'required|integer|unique:quartos,numero',
             'capacidade' => 'required|integer',
             'preco_diaria' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
             
@@ -166,6 +167,7 @@ class QuartoController extends Controller
         ],[
             'numero.required' => 'numero é obrigatório.',
             'numero.integer' => 'Numero precisa ser um numero inteiro.',
+            'numero.unique' => 'Numero de quarto já existente!',
             'capacidade.required' => 'capacidade é obrigatorio.',
             'capacidade.integer' => 'capacidade precisa ser um numero inteiro',
             'preco_diaria.required' => 'diaria é obrigatório.',
@@ -183,7 +185,7 @@ class QuartoController extends Controller
 
         $quarto->save();
 
-        return redirect('quarto')->with('success', 'Usuário cadastrado com sucesso!');
+        return redirect('quarto')->with('success', 'Quarto cadastrado com sucesso!');
     }
 
     public function painel()

@@ -18,8 +18,8 @@
                     <p>Não há reservas feita por você!</p>
                 @endif
                 @foreach ($reservasUsuario as $reserva)
-                    <p>Seu checkin: {{$reserva->data_checkin}}</p>
-                    <p>Seu checkout: {{$reserva->data_checkout}}</p>
+                    <p>Seu checkin do quarto <b>{{$reserva->quarto->numero}}</b>: {{$reserva->data_checkin}}</p>
+                    <p>Seu checkout do quarto <b>{{$reserva->quarto->numero}}</b>: {{$reserva->data_checkout}}</p>
                 @endforeach
                 <a href="/dashboard">voltar</a>
             </div>

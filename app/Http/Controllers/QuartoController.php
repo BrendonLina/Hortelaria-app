@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Quarto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,8 +16,10 @@ class QuartoController extends Controller
      */
     public function index()
     {
-       
-        return view('index');
+        
+        // $quartos = Quarto::where('disponivel', '=' , true)->get();
+
+        // return view('index', compact('quartos'));
     }
 
     /**
@@ -130,7 +133,7 @@ class QuartoController extends Controller
 
     public function cadastrarQuarto()
     {
-        return view('cadastrarquarto');
+        return view('quarto');
     }
 
     public function cadastrarQuartoStore(Request $request)
@@ -153,5 +156,35 @@ class QuartoController extends Controller
         return view('dashboard');
     }
 
+    public function listarDisponiveis()
+    {
+        $quartos = Quarto::where('disponivel', '=' , true)->get();
+
+        return view('index', compact('quartos'));
+
+    }
+
+    public function quartosOcupados()
+    {
+        $quartosOcupados = "";
+        return view('quartosocupados', compact('quartosOcupados'));
+    }
+
+    public function quartosOcupadosStore(Request $request)
+{
+    $request->validate([
+        'data_especifica' => 'required|date',
+    ]);
+
+    
+    $dataEspecifica = $request->input('data_especifica');
+
+    $quartosOcupados = Quarto::whereHas('reservas', function ($query) use ($dataEspecifica) {
+        $query->whereDate('data_checkin', '<=', $dataEspecifica)
+            ->whereDate('data_checkout', '>=', $dataEspecifica);
+    })->get();
+
+    return view('quartosocupados', compact('quartosOcupados'));
+}
     
 }

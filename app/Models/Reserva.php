@@ -15,4 +15,14 @@ class Reserva extends Model
         'quarto_id',
         'user_id'
     ];
+
+    public function quarto()
+    {
+        return $this->belongsTo(Quarto::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

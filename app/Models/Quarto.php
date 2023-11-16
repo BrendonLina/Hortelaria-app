@@ -15,4 +15,9 @@ class Quarto extends Model
         'preco_diaria',
         'disponivel'
     ];
+
+    public function reservas()
+    {
+        return $this->hasMany(Reserva::class);
+    }
 }

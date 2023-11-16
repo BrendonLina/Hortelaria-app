@@ -30,11 +30,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [QuartoController::class, 'painel'])->name('dashboard');
 
-    Route::get('/reserva', [ReservaController::class, 'reserva'])->middleware('administrador')->name('reserva');
-    Route::post('/reserva', [ReservaController::class, 'reservaStore'])->middleware('administrador');
+    Route::get('/reserva', [ReservaController::class, 'reserva'])->name('reserva');
+    Route::post('/reserva', [ReservaController::class, 'reservaStore']);
     Route::get('/usuarioreserva', [ReservaController::class, 'usuarioReserva']);
 
-    Route::get('/quarto', [QuartoController::class, 'cadastrarQuarto']);
-    Route::post('/quarto', [QuartoController::class, 'cadastrarQuartoStore']);
+    Route::get('/quarto', [QuartoController::class, 'cadastrarQuarto'])->middleware('administrador');
+    Route::post('/quarto', [QuartoController::class, 'cadastrarQuartoStore'])->middleware('administrador');
 
 });
